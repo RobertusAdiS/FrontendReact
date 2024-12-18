@@ -12,7 +12,9 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get("http://localhost:8080/api/products");
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/products`
+    );
     return response.data;
   }
 );
@@ -22,12 +24,15 @@ export const addProduct = createAsyncThunk(
   "products/addProduct",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post("http://localhost:8080/api/products", {
-        title: data.title,
-        description: data.description,
-        price: data.price,
-        imageUrl: data.imgURL,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/products`,
+        {
+          title: data.title,
+          description: data.description,
+          price: data.price,
+          imageUrl: data.imgURL,
+        }
+      );
       return response.data;
     } catch (error) {
       console.error(
@@ -47,7 +52,7 @@ export const removeProduct = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/products/${id}`
+        `${process.env.REACT_APP_API_URL}/products/${id}`
       );
       return response.data;
     } catch (error) {
@@ -68,7 +73,7 @@ export const updateProduct = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/products/${data.id}`,
+        `${process.env.REACT_APP_API_URL}/products/${data.id}`,
         {
           title: data.title,
           description: data.description,
